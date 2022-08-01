@@ -1,0 +1,16 @@
+Derniere_cloture_comptable = 
+// les données convergence sont disponibles au plus tard à J+4, donc les rapports PBI sont actualisés pour J+5
+// on ajoute deux jours pour le premier week-end du mois
+VAR reference_date = TODAY()-7
+// au 7è jour de chaque mois, la date de référence est actualisée et prend la valeur de la dernière date du mois précédent et 
+// au cours du mois il y a un retard de 7 jours par rapport à la date actuelle
+
+// on peut alors chercher la fin du mois M-1, correspondant à la date de référence
+VAR end_of_last_month = EOMONTH(reference_date, -1)
+VAR YM = FORMAT(end_of_last_month, "YYYY")&FORMAT(end_of_last_month, "MM")
+
+RETURN ROW(
+    "Reference_date", reference_date,
+    "Dernière clôture", end_of_last_month,
+    "YEARMONTH", YM
+)
